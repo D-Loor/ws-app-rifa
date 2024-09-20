@@ -14,6 +14,7 @@ use App\Http\Controllers\Padron\RecintoController;
 use App\Http\Controllers\Padron\ZonaController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermisoRolController;
+use App\Http\Controllers\RifaController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TerritorioController;
 use App\Http\Controllers\UsuarioController;
@@ -40,5 +41,5 @@ Route::post('login', [UsuarioController::class, 'login'])->name('login');
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('rol', RolController::class);
     Route::resource('usuario', UsuarioController::class);
-
+    Route::resource('rifa', RifaController::class);
 });

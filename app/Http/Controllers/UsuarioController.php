@@ -77,7 +77,7 @@ class UsuarioController extends Controller
                 'password' => $password,
             ];
             $correoController = new CorreoController();
-            return $correoController->activacionCuenta($mailData);
+            $correoController->activacionCuenta($mailData);
 
             return response()->json(['result' => "Dato Registrado", 'code' => '200', 'usuario_id' => $usuario->id]);
         } catch (\Exception $e) {
