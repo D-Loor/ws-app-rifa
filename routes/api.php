@@ -48,4 +48,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('limite', LimiteController::class);
     Route::resource('suerte', SuerteController::class);
     Route::resource('ticket', TicketController::class);
+
+
+    Route::post('usuario/restablecer-password', [UsuarioController::class, 'restablecerPassword']);
 });

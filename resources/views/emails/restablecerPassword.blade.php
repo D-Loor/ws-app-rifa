@@ -11,7 +11,7 @@
         <table align="center" bgcolor="#ffffff" style="border-left: 10px solid white; border-right: 10px solid white; max-width: 600px; width: 100%;">
             <tr height="80">
                 <td align="left" class="vertical-align-middle" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: middle;">
-                    <a href="https://revolucionciudadana.com.ec/" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
+                    <a href="http://localhost:4200" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
                         <img src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/LogoRC5G.png') }}" alt="Revolución Ciudadana" height="50" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
                     </a>
                 </td>
@@ -51,7 +51,7 @@
                     <tr align="left">
                         <td width="36" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td>
                         <td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
-                            <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Hola {{ $datos['nombres'] }},</p>
+                            <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Hola {{ $datos['usuario'] }},</p>
                             <br/>
                             <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;  text-align: justify;">Tu contraseña ha sido restablecida con éxito. A continuación, encontrarás tu nueva contraseña temporal:</p>
                             <br/>
@@ -63,7 +63,7 @@
                             <br/>
                             <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Saludos cordiales,</p>
                             <br/>
-                            <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Equipo de Control Electoral 2025.</p>
+                            <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Equipo de Miller 365.</p>
 
                         </td>
                     </tr>
@@ -90,7 +90,7 @@
             <tr height="15"><td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
             <tr>
                 <td align="center" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
-                    <a href="https://revolucionciudadana.com.ec/" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
+                    <a href="http://localhost:4200" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
                         <img src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/LogoRC5B.png') }}" alt="Revolución Ciudadana" height="30" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
                     </a>
                 </td>
@@ -98,18 +98,10 @@
             <tr height="2"><td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
             <tr>
                 <td align="center" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
-                    <p class="text-white" style="color: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">© 2024 Todos los derechos reservados. RC5. ®</p>
+                    <p class="text-white" style="color: white; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">© 2024 Todos los derechos reservados. Miller 365. ®</p>
                 </td>
             </tr>
             <tr height="15"><td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
-            <tr>
-                <td align="center" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
-                    <a href="https://twitter.com/RC5Oficial" style="-webkit-text-decoration-color: #464646; color: #F16522; text-decoration: none; text-decoration-color: #464646;"><img width="25" height="25" src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/icons/x.png') }}" target="_blank" alt="Twitter" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;"></a>&nbsp;
-                    <a href="https://www.youtube.com/@RC5Oficial" style="-webkit-text-decoration-color: #464646; color: #F16522; text-decoration: none; text-decoration-color: #464646;"><img width="25" height="25" src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/icons/yt.png') }}" target="_blank" alt="YouTube" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;"></a>&nbsp;
-                    <a href="https://www.facebook.com/RevolucionCiudadanaEC" style="-webkit-text-decoration-color: #464646; color: #F16522; text-decoration: none; text-decoration-color: #464646;"><img width="25" height="25" src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/icons/fb.png') }}" target="_blank" alt="Facebook" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;"></a>&nbsp;
-                    <a href="https://www.instagram.com/rc5oficial/" style="-webkit-text-decoration-color: #464646; color: #F16522; text-decoration: none; text-decoration-color: #464646;"><img width="25" height="25" src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/icons/ig.png') }}" target="_blank" alt="Instagram" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;"></a>&nbsp;
-                </td>
-            </tr>
             <tr height="10"><td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
         </table>
     </div>

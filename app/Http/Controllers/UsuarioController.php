@@ -199,7 +199,7 @@ class UsuarioController extends Controller
                     'password' => $password,
                 ];
 
-                $data = Usuario::find($request->usuario);
+                $data = Usuario::find($request->usuario_id);
                 $data->fill($request->all());
                 $data->password = Hash::make($password);
                 $data->update();

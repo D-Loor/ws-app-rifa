@@ -11,7 +11,7 @@
         <table align="center" bgcolor="#ffffff" style="border-left: 10px solid white; border-right: 10px solid white; max-width: 600px; width: 100%;">
             <tr height="80">
                 <td align="left" class="vertical-align-middle" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: middle;">
-                    <a href="https://revolucionciudadana.com.ec/" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
+                    <a href="http://localhost:4200" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
                         <img src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/LogoRC5G.png') }}" alt="Revolución Ciudadana" height="50" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
                     </a>
                 </td>
