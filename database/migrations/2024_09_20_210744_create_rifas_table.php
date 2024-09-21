@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('rifas', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->double('valor')->unique();
             $table->double('primera_suerte');
             $table->double('segunda_suerte');

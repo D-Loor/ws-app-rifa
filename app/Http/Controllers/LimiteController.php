@@ -2,23 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rifa;
+use App\Models\Limite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class RifaController extends Controller
+class LimiteController extends Controller
 {
-
     protected $reglasValidacion = [
-        'valor' => 'required|numeric',
-        'primera_suerte' => 'required|numeric',
-        'segunda_suerte' => 'required|numeric',
-        'tercera_suerte' => 'required|numeric',
-        'cuarta_suerte' => 'required|numeric',
-        'quinta_suerte' => 'required|numeric',
-        'sexta_suerte' => 'required|numeric',
-        'septima_suerte' => 'required|numeric',
-        'estado' => 'required|string|max:1'
+        'cifras' => 'required|numeric',
+        'valor' => 'required|numeric'
     ];
 
     /**
@@ -29,7 +21,7 @@ class RifaController extends Controller
     public function index()
     {
         try {
-            $response = Rifa::get();
+            $response = Limite::get();
             if ($response) {
                 return response()->json(['result' => $response, 'code' => '200']);
             } else
@@ -59,14 +51,14 @@ class RifaController extends Controller
     {
         try {
             $reglasEspecificas = $this->reglasValidacion;
-            $reglasEspecificas['valor'] = 'required|numeric|unique:rifas,valor';
+            $reglasEspecificas['cifras'] = 'required|numeric|unique:limites,cifras';
             $validator = Validator::make($request->all(), $reglasEspecificas);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
             }
 
-            $data = new Rifa();
+            $data = new Limite();
             $data->fill($request->all());
             $data->save();
 
@@ -79,10 +71,10 @@ class RifaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rifa  $rifa
+     * @param  \App\Models\Limite  $limite
      * @return \Illuminate\Http\Response
      */
-    public function show(Rifa $rifa)
+    public function show(Limite $limite)
     {
         //
     }
@@ -90,10 +82,10 @@ class RifaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rifa  $rifa
+     * @param  \App\Models\Limite  $limite
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rifa $rifa)
+    public function edit(Limite $limite)
     {
         //
     }
@@ -102,22 +94,21 @@ class RifaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rifa  $rifa
+     * @param  \App\Models\Limite  $limite
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rifa $rifa)
+    public function update(Request $request, Limite $limite)
     {
         try {
             $validator = Validator::make($request->all(), [
-                'id' => 'required|integer|exists:rifas,id',
-                'estado' => 'required|string|in:1,2',
+                'id' => 'required|integer|exists:limites,id',
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
             }
 
-            $data = Rifa::find($request->id);
+            $data = Limite::find($request->id);
             $data->fill($request->all());
             $data->update();
             return response()->json(['result' => "Dato Actualizado", 'code' => '200']);
@@ -129,13 +120,13 @@ class RifaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rifa  $rifa
+     * @param  \App\Models\Limite  $limite
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rifa $rifa)
+    public function destroy(Limite $limite)
     {
         try {
-            $response = Rifa::find($rifa->id);
+            $response = Limite::find($limite->id);
             if ($response) {
                 $response->delete();
                 return response()->json(['result' => "Dato Eliminado", 'code' => '200']);

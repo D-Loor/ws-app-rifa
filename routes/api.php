@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ImagenController;
+use App\Http\Controllers\LimiteController;
 use App\Http\Controllers\Padron\JRVController;
 use App\Http\Controllers\Padron\EleccionController;
 use App\Http\Controllers\Padron\CantonController;
@@ -16,7 +17,9 @@ use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermisoRolController;
 use App\Http\Controllers\RifaController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\SuerteController;
 use App\Http\Controllers\TerritorioController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\VoluntarioController;
 use Illuminate\Http\Request;
@@ -42,4 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('rol', RolController::class);
     Route::resource('usuario', UsuarioController::class);
     Route::resource('rifa', RifaController::class);
+    Route::resource('limite', LimiteController::class);
+    Route::resource('suerte', SuerteController::class);
+    Route::resource('ticket', TicketController::class);
 });

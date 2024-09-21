@@ -2,25 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rifa;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class RifaController extends Controller
+class TicketController extends Controller
 {
-
     protected $reglasValidacion = [
-        'valor' => 'required|numeric',
-        'primera_suerte' => 'required|numeric',
-        'segunda_suerte' => 'required|numeric',
-        'tercera_suerte' => 'required|numeric',
-        'cuarta_suerte' => 'required|numeric',
-        'quinta_suerte' => 'required|numeric',
-        'sexta_suerte' => 'required|numeric',
-        'septima_suerte' => 'required|numeric',
-        'estado' => 'required|string|max:1'
+        'rifa_id' => 'required|numeric',
+        'usuario_id' => 'required|numeric',
+        'numero' => 'required|numeric',
+        'codigo' => 'required|string',
+        'fecha_venta' => 'required|date',
+        'fecha_juego' => 'required|date'
     ];
-
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +24,7 @@ class RifaController extends Controller
     public function index()
     {
         try {
-            $response = Rifa::get();
+            $response = Ticket::get();
             if ($response) {
                 return response()->json(['result' => $response, 'code' => '200']);
             } else
@@ -58,15 +53,13 @@ class RifaController extends Controller
     public function store(Request $request)
     {
         try {
-            $reglasEspecificas = $this->reglasValidacion;
-            $reglasEspecificas['valor'] = 'required|numeric|unique:rifas,valor';
-            $validator = Validator::make($request->all(), $reglasEspecificas);
+            $validator = Validator::make($request->all(), $this->reglasValidacion);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
             }
 
-            $data = new Rifa();
+            $data = new Ticket();
             $data->fill($request->all());
             $data->save();
 
@@ -79,10 +72,10 @@ class RifaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Rifa  $rifa
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function show(Rifa $rifa)
+    public function show(Ticket $ticket)
     {
         //
     }
@@ -90,10 +83,10 @@ class RifaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Rifa  $rifa
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rifa $rifa)
+    public function edit(Ticket $ticket)
     {
         //
     }
@@ -102,22 +95,21 @@ class RifaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rifa  $rifa
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rifa $rifa)
+    public function update(Request $request, Ticket $ticket)
     {
         try {
             $validator = Validator::make($request->all(), [
-                'id' => 'required|integer|exists:rifas,id',
-                'estado' => 'required|string|in:1,2',
+                'id' => 'required|integer|exists:tickets,id',
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
             }
 
-            $data = Rifa::find($request->id);
+            $data = Ticket::find($request->id);
             $data->fill($request->all());
             $data->update();
             return response()->json(['result' => "Dato Actualizado", 'code' => '200']);
@@ -129,13 +121,13 @@ class RifaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Rifa  $rifa
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rifa $rifa)
+    public function destroy(Ticket $ticket)
     {
         try {
-            $response = Rifa::find($rifa->id);
+            $response = Ticket::find($ticket->id);
             if ($response) {
                 $response->delete();
                 return response()->json(['result' => "Dato Eliminado", 'code' => '200']);
