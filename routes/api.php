@@ -13,6 +13,7 @@ use App\Http\Controllers\Padron\ParroquiaController;
 use App\Http\Controllers\Padron\ProvinciaController;
 use App\Http\Controllers\Padron\RecintoController;
 use App\Http\Controllers\Padron\ZonaController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\PermisoRolController;
 use App\Http\Controllers\RifaController;
@@ -51,4 +52,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
     Route::post('usuario/restablecer-password', [UsuarioController::class, 'restablecerPassword']);
+
+   
 });
+
+Route::get('generar-ticket',[PDFController::class, 'generarTicket']);
