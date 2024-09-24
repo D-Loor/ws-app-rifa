@@ -2,29 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
+// use Mpdf\Mpdf;
 
 class PDFController extends Controller
 {
     public function generarTicket()
     {
-        $codigo = "Ticket01";
-        $fecha = "23/09/2024";
-        $vendedor = "DiegoLM";
-        $numero = "031";
-        $valor = "1";
-        $premio1 = "580";
-        $premio2 = "100";
-        $premio3 = "25";
-        $premio4 = "15";
-        $premio5 = "10";
-        $premio6 = "10";
-        $premio7 = "5";
+        $ticket['codigo'] = "Ticket01";
+        $ticket['fecha'] = "23/09/2024";
+        $ticket['vendedor'] = "DiegoLM";
+        $ticket['numero'] = "031";
+        $ticket['valor'] = "1";
+        $ticket['premio1'] = "580";
+        $ticket['premio2'] = "100";
+        $ticket['premio3'] = "25";
+        $ticket['premio4'] = "15";
+        $ticket['premio5'] = "10";
+        $ticket['premio6'] = "10";
+        $ticket['premio7'] = "5";
 
-        //return response()->json(['result'=>$rp,'result2'=>$espaciosrp]);
+        $qrCode = QrCode::size(300)->generate($ticket['codigo']);
 
-        return Pdf::loadView('pdfs/ticket', compact('fecha', 'vendedor', 'numero', 'valor', 'premio1', 'premio2', 'premio3', 'premio4', 'premio5', 'premio6', 'premio7'))
+        return Pdf::loadView('pdfs/ticket', compact('ticket', 'qrCode'))
             ->setPaper('a4', 'portrait')
-            ->stream('Ticket ' . $codigo . '.pdf');
+            ->setOption([
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isFontSubsettingEnabled' => true,
+            ])
+            ->stream('Ticket ' . $ticket['codigo'] . '.pdf'); 
+
+        // $mpdf = new Mpdf();
+        // $mpdf->WriteHTML(view('pdfs.ticket', compact('ticket'))->render());
+        // $mpdf->Output('Ticket ' . $ticket['codigo'] . '.pdf', 'I');
     }
 }

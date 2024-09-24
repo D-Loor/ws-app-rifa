@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,17 +20,20 @@ Route::get('/', function () {
 });
 
 Route::get('/ticket', function () {
-    $fecha = "23/9/2024";
-    $vendedor = "DiegoLM";
-    $numero = "031";
-    $valor = "1";
-    $premio1 = "580";
-    $premio2 = "100";
-    $premio3 = "25";
-    $premio4 = "15";
-    $premio5 = "10";
-    $premio6 = "10";
-    $premio7 = "5";
+    $ticket['codigo'] = "Ticket01";
+    $ticket['fecha'] = "23/09/2024";
+    $ticket['vendedor'] = "DiegoLM";
+    $ticket['numero'] = "031";
+    $ticket['valor'] = "1";
+    $ticket['premio1'] = "580";
+    $ticket['premio2'] = "100";
+    $ticket['premio3'] = "25";
+    $ticket['premio4'] = "15";
+    $ticket['premio5'] = "10";
+    $ticket['premio6'] = "10";
+    $ticket['premio7'] = "5";
+    $qrCode = QrCode::size(300)->generate($ticket['codigo']);
 
-    return view('pdfs/ticket', compact('fecha', 'vendedor', 'numero', 'valor', 'premio1', 'premio2', 'premio3', 'premio4', 'premio5', 'premio6', 'premio7'));
+
+    return view('pdfs/ticket', compact('ticket', 'qrCode'));
 });
