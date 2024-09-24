@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/ticket', function () {
-    $fechaHora = "23/9/2024 11:46:12";
+    $fecha = "23/9/2024";
     $vendedor = "DiegoLM";
     $numero = "031";
     $valor = "1";
@@ -30,5 +30,5 @@ Route::get('/ticket', function () {
     $premio6 = "10";
     $premio7 = "5";
 
-    return view('pdfs/ticket', compact('fechaHora', 'vendedor', 'numero', 'valor', 'premio1', 'premio2', 'premio3', 'premio4', 'premio5', 'premio6', 'premio7'));
+    return view('pdfs/ticket', compact('fecha', 'vendedor', 'numero', 'valor', 'premio1', 'premio2', 'premio3', 'premio4', 'premio5', 'premio6', 'premio7'));
 });

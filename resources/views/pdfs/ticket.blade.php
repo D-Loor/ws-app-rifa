@@ -9,15 +9,18 @@
 
         <style>
             @page {
-                margin-top: 30px;
+                margin-top: 80px;
                 margin-bottom: 0px;
-                margin-right: 10px;
-                margin-left: 10px;
-
+                margin-right: 40px;
+                margin-left: 40px;
             }
 
             * {
                 font-family: sans-serif;
+            }
+
+            .container {
+                padding: 0 40px;
             }
 
             .datos-ticket span {
@@ -27,105 +30,128 @@
             }
 
             .datos-ticket .vendedor {
-                float: right;
+                position: absolute;
+                right: 0;
+                margin-right: 48px;
             }
 
-            .portada {
-                width: 789px;
+            .portada {    
+                margin-top: 180px;
+                width: 630px;
                 height: 559px;
                 position: absolute;
+                opacity: 0.5;
             }
 
             .datos-rifa {
                 position: relative;
-                margin-top: 5px;
+                padding-top: 30px;
+                margin-top: 35px;
             }
 
             .datos-rifa .empresa {
                 font-style: italic;
-                font-size: 35px;
+                font-size: 50px;
                 margin-left: 20px;
             }
 
             .datos-rifa .numero {
-                font-size: 75px;
-                float: right;
+                font-size: 95px;
+                position: absolute;
+                right: 0;
             }
 
             .datos-rifa .valor {
                 text-align: center;
-                font-weight: 500;
-                font-size: 35px;
-                margin-top: 5px;
+                font-weight: bold;
+                font-size: 50px;
+                margin-top: 60px;
                 letter-spacing: 1px;
             }
 
             .datos-rifa .precio {
-                font-size: 55px;
+                font-size: 70px;
             }
 
-            .datos-rifa .premios div span {
+            .premios-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .premios-table td {
+                font-size: 40px;
                 font-weight: bold;
+                padding: 10px;
+                text-align: center;
             }
 
-            .grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+            .premios-table td strong{ 
+                font-size: 75px;
             }
 
-            .col {
-                padding: 0 20px;
-                justify-self: center;
+            .full-width {
+                text-align: center;
             }
 
-            .grid > .col:last-child:nth-child(odd) {
-                grid-column: span 2;
-                justify-self: center;
+            .footer {
+                margin-top: 160px;
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .footer .fecha{
+                word-spacing: 200px;
+                text-decoration: underline;
+            }
+
+            .footer .condiciones {
+                font-weight: bold;
             }
 
         </style>
     </head>
 
     <body>
-        <div class="datos-ticket">
-            <!-- <span class="fecha-hora">{{ $fechaHora }}</span> -->
-            <span class="vendedor">vendedor: {{ $vendedor }}</span>
+        <div class="container">
+            <div class="datos-ticket">
+                <span class="vendedor">vendedor: {{ $vendedor }}</span>
+            </div>
+
+            <img src='images/manos.png' class="portada">
+
+            <div class="datos-rifa">
+                <strong class="empresa">Miller365</strong>
+                <strong class="numero">#{{ $numero }}</strong>
+
+                <p class="valor">Valor $<strong class="precio">{{ $valor }}</strong></p>
+
+                <table class="premios-table">
+                    <tr>
+                        <td>1era <strong>${{ $premio1 }}</strong></td>
+                        <td>4ta <strong>${{ $premio4 }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>2da <strong>${{ $premio2 }}</strong></td>
+                        <td>5ta <strong>${{ $premio5 }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>3era <strong>${{ $premio3 }}</strong></td>
+                        <td>6ta <strong>${{ $premio6 }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="full-width">7ma <strong>${{ $premio7 }}</strong></td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="footer">
+                <p class="fecha">{{ $fecha }}                      Miller365</p>
+
+                <p class="condiciones">Todo boleto ganador tiene 7 días de vigencia para reclamar tu premio.</p>
+            </div>
         </div>
-
-        <img src='images/manos.png' class="portada">
-
-        <div class="datos-rifa">
-          <strong class="empresa">Miller365</strong>
-          <strong class="numero">#{{ $numero }}</strong>
-
-          <p class="valor">Valor $<strong class="precio">{{ $valor }}</strong></p>
-
-          <div class="premios grid">
-            <div class="col"> 
-                <span>1era <strong>${{ $premio1 }}</strong></span>
-            </div>
-            <div class="col"> 
-                <span>4ta <strong>${{ $premio4 }}</strong></span>
-            </div>
-            <div class="col"> 
-                <span>2da <strong>${{ $premio2 }}</strong></span>
-            </div>
-            <div class="col"> 
-                <span>5ta <strong>${{ $premio5 }}</strong></span>
-            </div>
-            <div class="col"> 
-                <span>3era <strong>${{ $premio3 }}</strong></span>
-            </div>
-            <div class="col"> 
-                <span>6ta <strong>${{ $premio6 }}</strong></span>
-            </div>
-            <div class="col"> 
-                <span>7ma <strong>${{ $premio7 }}</strong></span>
-            </div>
-          </div>
-
-        </div>
+        
 
 
     </body>

@@ -9,7 +9,7 @@ class PDFController extends Controller
     public function generarTicket()
     {
         $codigo = "Ticket01";
-        $fechaHora = "23/09/2024 11:46:12";
+        $fecha = "23/09/2024";
         $vendedor = "DiegoLM";
         $numero = "031";
         $valor = "1";
@@ -23,7 +23,7 @@ class PDFController extends Controller
 
         //return response()->json(['result'=>$rp,'result2'=>$espaciosrp]);
 
-        return Pdf::loadView('pdfs/ticket', compact('fechaHora', 'vendedor', 'numero', 'valor', 'premio1', 'premio2', 'premio3', 'premio4', 'premio5', 'premio6', 'premio7'))
+        return Pdf::loadView('pdfs/ticket', compact('fecha', 'vendedor', 'numero', 'valor', 'premio1', 'premio2', 'premio3', 'premio4', 'premio5', 'premio6', 'premio7'))
             ->setPaper('a4', 'portrait')
             ->stream('Ticket ' . $codigo . '.pdf');
     }
