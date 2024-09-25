@@ -9,7 +9,7 @@
 
         <style>
             @page {
-                margin-top: 90px;
+                margin-top: 40px;
                 margin-bottom: 0px;
                 margin-right: 20px;
                 margin-left: 20px;
@@ -30,45 +30,43 @@
             }
 
             .datos-ticket .vendedor {
-                position: absolute;
-                right: 0;
-                margin-right: 48px;
+                text-align: right;
             }
 
-            .portada {    
-                margin-top: 170px;
-                width: 630px;
-                height: 559px;
-                position: absolute;
-                opacity: 0.5;
+            .datos-rifa-table {
+                width: 100%;
+                table-layout: fixed;
+            }
+
+            .datos-rifa-table td {
+                font-weight: bold;
+            }
+
+            .datos-ticket .empresa {
+                font-style: italic;
+                font-size: 50px;
+                text-align: left;
+                padding-top: 30px;
+            }
+
+            .datos-ticket .numero {
+                font-size: 95px;
+                text-align: right;
             }
 
             .datos-rifa {
-                position: relative;
-                padding-top: 30px;
-                margin-top: 10px;
-            }
-
-            .datos-rifa .empresa {
-                position: absolute;
-                left: 0;
-                font-style: italic;
-                font-size: 50px;
-                margin-left: 20px;
-                margin-top: 40px;
-            }
-
-            .datos-rifa .numero {
-                font-size: 95px;
-                position: absolute;
-                right: 0;
+                margin-top: 0px;
+                background-image: url('images/manos2.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
             }
 
             .datos-rifa .valor {
                 text-align: center;
                 font-weight: bold;
                 font-size: 50px;
-                margin-top: 120px;
+                margin-top: 0px;
                 margin-bottom: 10px;
                 letter-spacing: 1px;
             }
@@ -122,14 +120,18 @@
     <body>
         <div class="container">
             <div class="datos-ticket">
-                <span class="vendedor">vendedor: {{ $ticket['vendedor'] }}</span>
+                <div class="vendedor" >
+                    <span>vendedor: {{ $ticket['vendedor'] }}</span>
+                </div>
+                <table class="datos-rifa-table">
+                    <tr>
+                        <td class="empresa">Miller365</td>
+                        <td class="numero">#{{ $ticket['numero'] }}</td>
+                    </tr>
+                </table>
             </div>
 
-            <img src='images/manos.png' class="portada" style=" position: absolute;">
-
             <div class="datos-rifa" style=" position: relative;">
-                <strong class="empresa">Miller365</strong>
-                <strong class="numero">#{{ $ticket['numero'] }}</strong>
 
                 <p class="valor">Valor $<strong class="precio">{{ $ticket['valor'] }}</strong></p>
 
@@ -152,7 +154,6 @@
                 </table>
 
             </div>
-            <br>
             <br>
             <div class="codigo-qr">
                 <div>{!! $qrCode !!}</div>                

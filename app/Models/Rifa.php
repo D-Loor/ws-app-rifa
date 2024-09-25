@@ -20,6 +20,8 @@ class Rifa extends Model
         'quinta_suerte',
         'sexta_suerte',
         'septima_suerte',
+        'cifras',
+        'limite',
         'estado'
     ];
 }

@@ -11,8 +11,8 @@ class PDFController extends Controller
     public function generarTicket()
     {
         $ticket['codigo'] = "Ticket01";
-        $ticket['fecha'] = "23/09/2024";
-        $ticket['vendedor'] = "DiegoLM";
+        $ticket['fecha'] = "25/09/2024";
+        $ticket['vendedor'] = "Tester18";
         $ticket['numero'] = "031";
         $ticket['valor'] = "1";
         $ticket['premio1'] = "580";

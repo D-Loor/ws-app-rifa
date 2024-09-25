@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rifa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RifaController extends Controller
 {
@@ -18,6 +19,8 @@ class RifaController extends Controller
         'quinta_suerte' => 'required|numeric',
         'sexta_suerte' => 'required|numeric',
         'septima_suerte' => 'required|numeric',
+        'cifras' => 'required|numeric',
+        'valor' => 'required|numeric',
         'estado' => 'required|string|max:1'
     ];
 
@@ -59,7 +62,14 @@ class RifaController extends Controller
     {
         try {
             $reglasEspecificas = $this->reglasValidacion;
-            $reglasEspecificas['valor'] = 'required|numeric|unique:rifas,valor';
+            $reglasEspecificas['valor'] = [
+                'required',
+                'numeric',
+                Rule::unique('rifas')->where(function ($query) use ($request) {
+                    return $query->where('valor', $request->valor)
+                                 ->where('cifras', $request->cifras);
+                }),
+            ];
             $validator = Validator::make($request->all(), $reglasEspecificas);
 
             if ($validator->fails()) {

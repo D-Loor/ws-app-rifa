@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('rifas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->double('valor')->unique();
+            $table->double('valor');
             $table->double('primera_suerte');
             $table->double('segunda_suerte');
             $table->double('tercera_suerte');
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->double('quinta_suerte');
             $table->double('sexta_suerte');
             $table->double('septima_suerte');
+            $table->integer('cifras');
+            $table->double('limite');
             $table->string('estado');
         });
     }
