@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
-// use Mpdf\Mpdf;
+use Mpdf\Mpdf;
 
 class PDFController extends Controller
 {
@@ -23,19 +23,24 @@ class PDFController extends Controller
         $ticket['premio6'] = "10";
         $ticket['premio7'] = "5";
 
-        $qrCode = QrCode::size(300)->generate($ticket['codigo']);
+        $qrCode = QrCode::size(200)->generate($ticket['codigo']);
+        $qrCode = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $qrCode);
 
-        return Pdf::loadView('pdfs/ticket', compact('ticket', 'qrCode'))
-            ->setPaper('a4', 'portrait')
-            ->setOption([
-                'isHtml5ParserEnabled' => true,
-                'isRemoteEnabled' => true,
-                'isFontSubsettingEnabled' => true,
-            ])
-            ->stream('Ticket ' . $ticket['codigo'] . '.pdf'); 
+        // return Pdf::loadView('pdfs/ticket', compact('ticket', 'qrCode'))
+        //     ->setPaper('a4', 'portrait')
+        //     ->setOption([
+        //         'isHtml5ParserEnabled' => true,
+        //         'isRemoteEnabled' => true,
+        //         'isFontSubsettingEnabled' => true,
+        //     ])
+        //     ->stream('Ticket ' . $ticket['codigo'] . '.pdf'); 
 
-        // $mpdf = new Mpdf();
-        // $mpdf->WriteHTML(view('pdfs.ticket', compact('ticket'))->render());
-        // $mpdf->Output('Ticket ' . $ticket['codigo'] . '.pdf', 'I');
+        $mpdf = new Mpdf();
+        $mpdf->imageVars['images'] = 70;
+        $mpdf->SetCompression(true);
+        $mpdf->simpleTables = true;
+        $mpdf->useSubstitutions = false;
+        $mpdf->WriteHTML(view('pdfs.ticket', compact('ticket', 'qrCode'))->render());
+        $mpdf->Output('Ticket ' . $ticket['codigo'] . '.pdf', 'I');
     }
 }

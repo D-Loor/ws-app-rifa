@@ -11,8 +11,8 @@
             @page {
                 margin-top: 90px;
                 margin-bottom: 0px;
-                margin-right: 40px;
-                margin-left: 40px;
+                margin-right: 20px;
+                margin-left: 20px;
             }
 
             * {
@@ -98,21 +98,24 @@
             }
 
             .footer {
-                margin-top: 160px;
                 font-size: 22px;
                 text-align: center;
             }
 
             .footer .fecha{
                 font-style: italic;
-                word-spacing: 200px;
+                word-spacing: 250px;
                 text-decoration: underline;
+                margin: 0 15px 20px 0px;  
             }
 
             .footer .condiciones {
                 font-weight: bold;
             }
 
+            .codigo-qr {
+                text-align: center;
+            }
         </style>
     </head>
 
@@ -122,9 +125,9 @@
                 <span class="vendedor">vendedor: {{ $ticket['vendedor'] }}</span>
             </div>
 
-            <img src='images/manos.png' class="portada">
+            <img src='images/manos.png' class="portada" style=" position: absolute;">
 
-            <div class="datos-rifa">
+            <div class="datos-rifa" style=" position: relative;">
                 <strong class="empresa">Miller365</strong>
                 <strong class="numero">#{{ $ticket['numero'] }}</strong>
 
@@ -132,26 +135,28 @@
 
                 <table class="premios-table">
                     <tr>
-                        <td>1era <strong>${{ $ticket['premio1'] }}</strong></td>
-                        <td>4ta <strong>${{ $ticket['premio4'] }}</strong></td>
+                        <td>1era <strong style="font-size: 75px;">${{ $ticket['premio1'] }}</strong></td>
+                        <td>4ta <strong style="font-size: 75px;">${{ $ticket['premio4'] }}</strong></td>
                     </tr>
                     <tr>
-                        <td>2da <strong>${{ $ticket['premio2'] }}</strong></td>
-                        <td>5ta <strong>${{ $ticket['premio5'] }}</strong></td>
+                        <td>2da <strong style="font-size: 75px;">${{ $ticket['premio2'] }}</strong></td>
+                        <td>5ta <strong style="font-size: 75px;">${{ $ticket['premio5'] }}</strong></td>
                     </tr>
                     <tr>
-                        <td>3era <strong>${{ $ticket['premio3'] }}</strong></td>
-                        <td>6ta <strong>${{ $ticket['premio6'] }}</strong></td>
+                        <td>3era <strong style="font-size: 75px;">${{ $ticket['premio3'] }}</strong></td>
+                        <td>6ta <strong style="font-size: 75px;">${{ $ticket['premio6'] }}</strong></td>
                     </tr>
                     <tr>
-                        <td colspan="2" class="full-width">7ma <strong>${{ $ticket['premio7'] }}</strong></td>
+                        <td colspan="2" class="full-width">7ma <strong style="font-size: 75px;">${{ $ticket['premio7'] }}</strong></td>
                     </tr>
                 </table>
 
             </div>
             <br>
             <br>
-            {!! $qrCode !!}
+            <div class="codigo-qr">
+                <div>{!! $qrCode !!}</div>                
+            </div>
             <div class="footer">
                 <p class="fecha">{{ $ticket['fecha'] }}                      Miller365</p>
 
@@ -159,8 +164,6 @@
             </div>
         </div>
         
-
-
     </body>
 
 </html>

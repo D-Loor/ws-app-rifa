@@ -32,8 +32,7 @@ Route::get('/ticket', function () {
     $ticket['premio5'] = "10";
     $ticket['premio6'] = "10";
     $ticket['premio7'] = "5";
-    $qrCode = QrCode::size(300)->generate($ticket['codigo']);
-
+    $qrCode = QrCode::size(200)->generate($ticket['codigo']);
 
     return view('pdfs/ticket', compact('ticket', 'qrCode'));
 });
