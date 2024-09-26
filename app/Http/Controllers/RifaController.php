@@ -155,4 +155,17 @@ class RifaController extends Controller
             return response()->json(['error' => $e->getMessage(), 'code' => '500']);
         }
     }
+
+    public function rifasActivas()
+    {
+        try {
+            $response = Rifa::where('estado', '1')->get();
+            if ($response) {
+                return response()->json(['result' => $response, 'code' => '200']);
+            } else
+                return response()->json(['result' => "No hay registros", 'code' => '204']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage(), 'code' => '500']);
+        }
+    }
 }

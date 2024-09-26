@@ -37,10 +37,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('login', [UsuarioController::class, 'login'])->name('login');
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('rol', RolController::class);
@@ -51,9 +47,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('ticket', TicketController::class);
 
 
+    Route::get('rifas/activas', [RifaController::class, 'rifasActivas']);
     Route::post('usuario/restablecer-password', [UsuarioController::class, 'restablecerPassword']);
+    Route::get('ticket/conteo-vendidos/{fecha}/{rifa_id}', [TicketController::class, 'conteoVendidos']);
 
-   
 });
-
-Route::get('generar-ticket',[PDFController::class, 'generarTicket']);

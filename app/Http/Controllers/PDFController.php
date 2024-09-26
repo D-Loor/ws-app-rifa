@@ -8,22 +8,11 @@ use Mpdf\Mpdf;
 
 class PDFController extends Controller
 {
-    public function generarTicket()
+    public function generarTicket(array $ticket)
     {
-        $ticket['codigo'] = "Ticket01";
-        $ticket['fecha'] = "25/09/2024";
-        $ticket['vendedor'] = "Tester18";
-        $ticket['numero'] = "031";
-        $ticket['valor'] = "1";
-        $ticket['premio1'] = "580";
-        $ticket['premio2'] = "100";
-        $ticket['premio3'] = "25";
-        $ticket['premio4'] = "15";
-        $ticket['premio5'] = "10";
-        $ticket['premio6'] = "10";
-        $ticket['premio7'] = "5";
+        $url = "http://localhost:4200/validar/ticket/" . $ticket['codigo'];
 
-        $qrCode = QrCode::size(200)->generate($ticket['codigo']);
+        $qrCode = QrCode::size(200)->generate($url);
         $qrCode = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $qrCode);
 
         // return Pdf::loadView('pdfs/ticket', compact('ticket', 'qrCode'))
