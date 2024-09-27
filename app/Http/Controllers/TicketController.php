@@ -172,4 +172,17 @@ class TicketController extends Controller
             return response()->json(['error' => $e->getMessage(), 'code' => '500']);
         }
     }
+
+    public function ticketVendidos($fechaVenta) {
+        try {
+            $response = Ticket::with(['usuario:id,usuario', 'rifa'])->whereDate('fecha_venta', $fechaVenta)->get();
+
+            if ($response) {
+                return response()->json(['result' => $response, 'code' => '200']);
+            } else
+                return response()->json(['result' => 0, 'code' => '204']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage(), 'code' => '500']);
+        }
+    }
 }
