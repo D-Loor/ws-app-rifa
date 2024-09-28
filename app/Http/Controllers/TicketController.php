@@ -159,9 +159,10 @@ class TicketController extends Controller
         }
     }
 
-    public function conteoVendidos($fecha, $rifa_id) {
+    public function conteoVendidos($fecha, $numero, $rifa_id) {
         try {
             $response = Ticket::where('rifa_id', $rifa_id)
+            ->where('numero', $numero)
             ->whereDate('fecha_venta', $fecha)->count();
 
             if ($response) {
