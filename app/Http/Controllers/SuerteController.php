@@ -9,7 +9,13 @@ use Illuminate\Support\Facades\Validator;
 class SuerteController extends Controller
 {
     protected $reglasValidacion = [
-        'numero' => 'required|numeric',
+        'primera_suerte' => 'required|string',
+        'segunda_suerte' => 'required|string',
+        'tercera_suerte' => 'required|string',
+        'cuarta_suerte' => 'required|string',
+        'quinta_suerte' => 'required|string',
+        'sexta_suerte' => 'required|string',
+        'septima_suerte' => 'required|string',
         'fecha' => 'required|date'
     ];
 
@@ -54,6 +60,11 @@ class SuerteController extends Controller
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
+            }
+
+            $fechaExistente = Suerte::where('fecha', $request->fecha)->first();
+            if ($fechaExistente) {
+                return response()->json(['error' => 'La fecha ya existe en el registro.', 'code' => '401']);
             }
 
             $data = new Suerte();
@@ -130,6 +141,19 @@ class SuerteController extends Controller
                 return response()->json(['result' => "Dato Eliminado", 'code' => '200']);
             }
             return response()->json(['result' => "Registro no encontrado", 'code' => '404']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage(), 'code' => '500']);
+        }
+    }
+
+    public function suerteFecha($fecha) {
+        try {
+            $response = Suerte::whereDate('fecha_venta', $fecha)->get();
+
+            if ($response) {
+                return response()->json(['result' => $response, 'code' => '200']);
+            } else
+                return response()->json(['result' => 0, 'code' => '204']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'code' => '500']);
         }

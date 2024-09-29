@@ -12,7 +12,13 @@ class Suerte extends Model
     protected $table = 'suertes';
 
     protected $fillable = [
-        'numero',
+        'primera_suerte',
+        'segunda_suerte',
+        'tercera_suerte',
+        'cuarta_suerte',
+        'quinta_suerte',
+        'sexta_suerte',
+        'septima_suerte',
         'fecha',
     ];
 }
