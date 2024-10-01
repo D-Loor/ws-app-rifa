@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rifa;
+use App\Models\Suerte;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -177,6 +178,94 @@ class TicketController extends Controller
     public function ticketVendidos($fechaVenta) {
         try {
             $response = Ticket::with(['usuario:id,usuario', 'rifa'])->whereDate('fecha_venta', $fechaVenta)->get();
+
+            if ($response) {
+                return response()->json(['result' => $response, 'code' => '200']);
+            } else
+                return response()->json(['result' => 0, 'code' => '204']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage(), 'code' => '500']);
+        }
+    }
+
+    public function contabilidad($fecha) {
+        try {
+            $tickets = Ticket::with('rifa')->whereDate('fecha_venta', $fecha)->get();
+            $suerte = Suerte::whereDate('fecha', $fecha)->get()->first();
+
+            $ventas = 0;
+            $pagos = 0;
+            $ticketsGanadores = [];
+            foreach ($tickets as $ticket) {
+
+                $ganador = false;
+                $datosGanador['valor'] = $ticket->rifa->valor;
+                $datosGanador['cifras'] = $ticket->rifa->cifras;
+                $ventas += $ticket->rifa->valor;
+
+                if($suerte) {
+                    $primeraSuerte = substr($suerte->primera_suerte, - $ticket->rifa->cifras);
+                    $segundaSuerte = substr($suerte->segunda_suerte, - $ticket->rifa->cifras);
+                    $terceraSuerte = substr($suerte->tercera_suerte, - $ticket->rifa->cifras);
+                    $cuartaSuerte = substr($suerte->cuarta_suerte, - $ticket->rifa->cifras);
+                    $quintaSuerte = substr($suerte->quinta_suerte, - $ticket->rifa->cifras);
+                    $sextaSuerte = substr($suerte->sexta_suerte, - $ticket->rifa->cifras);
+                    $septimaSuerte = substr($suerte->septima_suerte, - $ticket->rifa->cifras);
+
+                    if($ticket->numero == $primeraSuerte){
+                        $pagos += $ticket->rifa->primera_suerte;
+                        $datosGanador['suerte'] = 1;
+                        $datosGanador['premio'] = $ticket->rifa->primera_suerte;
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $segundaSuerte){
+                        $pagos += $ticket->rifa->segunda_suerte;
+                        $datosGanador['suerte'] = 2;
+                        $datosGanador['premio'] = $ticket->rifa->segunda_suerte;
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $terceraSuerte){
+                        $pagos += $ticket->rifa->tercera_suerte;
+                        $datosGanador['suerte'] = 3;
+                        $datosGanador['premio'] = $ticket->rifa->tercera_suerte;
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $cuartaSuerte){
+                        $pagos += $ticket->rifa->cuarta_suerte;
+                        $datosGanador['suerte'] = 4;
+                        $datosGanador['premio'] = $ticket->rifa->cuarta_suerte;
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $quintaSuerte){
+                        $pagos += $ticket->rifa->quinta_suerte;
+                        $datosGanador['suerte'] = 5;
+                        $datosGanador['premio'] = $ticket->rifa->quinta_suerte;
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $sextaSuerte){
+                        $pagos += $ticket->rifa->sexta_suerte;
+                        $datosGanador['suerte'] = 6;
+                        $datosGanador['premio'] = $ticket->rifa->sexta_suerte;
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $septimaSuerte){
+                        $pagos += $ticket->rifa->septima_suerte;
+                        $datosGanador['suerte'] = 7;
+                        $datosGanador['premio'] = $ticket->rifa->septima_suerte;
+                        $ganador = true;
+                    }
+
+                }
+
+                if($ganador) {
+                    array_push($ticketsGanadores, $datosGanador);
+                }
+
+            }
+
+            $response['ventas'] = $ventas;
+            $response['pagos'] = $pagos;
+            $response['ticketsGanadores'] = $ticketsGanadores;
 
             if ($response) {
                 return response()->json(['result' => $response, 'code' => '200']);

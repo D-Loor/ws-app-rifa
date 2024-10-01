@@ -51,5 +51,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('usuario/restablecer-password', [UsuarioController::class, 'restablecerPassword']);
     Route::get('ticket/conteo-vendidos/{fecha}/{numero}/{rifa_id}', [TicketController::class, 'conteoVendidos']);
     Route::get('ticket/ticketVendidos/{fechaVenta}',[TicketController::class, 'ticketVendidos']);
-
+    Route::get('ticket/contabilidad/{fecha}',[TicketController::class, 'contabilidad']);
+    
 });

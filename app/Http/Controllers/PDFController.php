@@ -15,15 +15,6 @@ class PDFController extends Controller
         $qrCode = QrCode::size(200)->generate($url);
         $qrCode = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $qrCode);
 
-        // return Pdf::loadView('pdfs/ticket', compact('ticket', 'qrCode'))
-        //     ->setPaper('a4', 'portrait')
-        //     ->setOption([
-        //         'isHtml5ParserEnabled' => true,
-        //         'isRemoteEnabled' => true,
-        //         'isFontSubsettingEnabled' => true,
-        //     ])
-        //     ->stream('Ticket ' . $ticket['codigo'] . '.pdf'); 
-
         $mpdf = new Mpdf();
         $mpdf->imageVars['images'] = 70;
         $mpdf->SetCompression(true);
