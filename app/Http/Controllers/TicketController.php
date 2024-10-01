@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rifa;
 use App\Models\Suerte;
 use App\Models\Ticket;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -198,7 +199,6 @@ class TicketController extends Controller
             $ticketsGanadores = [];
             foreach ($tickets as $ticket) {
 
-                $ganador = false;
                 $datosGanador['valor'] = $ticket->rifa->valor;
                 $datosGanador['cifras'] = $ticket->rifa->cifras;
                 $ventas += $ticket->rifa->valor;
@@ -216,49 +216,45 @@ class TicketController extends Controller
                         $pagos += $ticket->rifa->primera_suerte;
                         $datosGanador['suerte'] = 1;
                         $datosGanador['premio'] = $ticket->rifa->primera_suerte;
-                        $ganador = true;
+                        array_push($ticketsGanadores, $datosGanador);
                     }
                     if($ticket->numero == $segundaSuerte){
                         $pagos += $ticket->rifa->segunda_suerte;
                         $datosGanador['suerte'] = 2;
                         $datosGanador['premio'] = $ticket->rifa->segunda_suerte;
-                        $ganador = true;
+                        array_push($ticketsGanadores, $datosGanador);
                     }
                     if($ticket->numero == $terceraSuerte){
                         $pagos += $ticket->rifa->tercera_suerte;
                         $datosGanador['suerte'] = 3;
                         $datosGanador['premio'] = $ticket->rifa->tercera_suerte;
-                        $ganador = true;
+                        array_push($ticketsGanadores, $datosGanador);
                     }
                     if($ticket->numero == $cuartaSuerte){
                         $pagos += $ticket->rifa->cuarta_suerte;
                         $datosGanador['suerte'] = 4;
                         $datosGanador['premio'] = $ticket->rifa->cuarta_suerte;
-                        $ganador = true;
+                        array_push($ticketsGanadores, $datosGanador);
                     }
                     if($ticket->numero == $quintaSuerte){
                         $pagos += $ticket->rifa->quinta_suerte;
                         $datosGanador['suerte'] = 5;
                         $datosGanador['premio'] = $ticket->rifa->quinta_suerte;
-                        $ganador = true;
+                        array_push($ticketsGanadores, $datosGanador);
                     }
                     if($ticket->numero == $sextaSuerte){
                         $pagos += $ticket->rifa->sexta_suerte;
                         $datosGanador['suerte'] = 6;
                         $datosGanador['premio'] = $ticket->rifa->sexta_suerte;
-                        $ganador = true;
+                        array_push($ticketsGanadores, $datosGanador);
                     }
                     if($ticket->numero == $septimaSuerte){
                         $pagos += $ticket->rifa->septima_suerte;
                         $datosGanador['suerte'] = 7;
                         $datosGanador['premio'] = $ticket->rifa->septima_suerte;
-                        $ganador = true;
+                        array_push($ticketsGanadores, $datosGanador);
                     }
 
-                }
-
-                if($ganador) {
-                    array_push($ticketsGanadores, $datosGanador);
                 }
 
             }
@@ -275,4 +271,91 @@ class TicketController extends Controller
             return response()->json(['error' => $e->getMessage(), 'code' => '500']);
         }
     }
+
+    public function validarTicket($codigoTicket, $fecha) {
+        try {
+            $ticket = Ticket::with('rifa')->where('codigo', $codigoTicket)->get()->first();
+
+            $pago = 0;
+            $suertes = [];
+            $ganador = false;
+
+            if($ticket){
+                $fecha_venta = new DateTime($ticket->fecha_venta);
+                $fecha_actual = new DateTime($fecha);
+
+                
+                $ticketVigente = $fecha_venta->diff($fecha_actual)->days;
+
+                if ($ticketVigente > 6){
+                    return response()->json(['result' => 0, 'code' => '200']);
+                }
+
+                $suerte = Suerte::whereDate('fecha', $ticket->fecha_juego)->get()->first();
+
+                if($suerte) {
+                    $primeraSuerte = substr($suerte->primera_suerte, - $ticket->rifa->cifras);
+                    $segundaSuerte = substr($suerte->segunda_suerte, - $ticket->rifa->cifras);
+                    $terceraSuerte = substr($suerte->tercera_suerte, - $ticket->rifa->cifras);
+                    $cuartaSuerte = substr($suerte->cuarta_suerte, - $ticket->rifa->cifras);
+                    $quintaSuerte = substr($suerte->quinta_suerte, - $ticket->rifa->cifras);
+                    $sextaSuerte = substr($suerte->sexta_suerte, - $ticket->rifa->cifras);
+                    $septimaSuerte = substr($suerte->septima_suerte, - $ticket->rifa->cifras);
+
+                    if($ticket->numero == $primeraSuerte){
+                        $pago += $ticket->rifa->primera_suerte;
+                        array_push($suertes, 1);
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $segundaSuerte){
+                        $pago += $ticket->rifa->segunda_suerte;
+                        array_push($suertes, 2);
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $terceraSuerte){
+                        $pago += $ticket->rifa->tercera_suerte;
+                        array_push($suertes, 3);
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $cuartaSuerte){
+                        $pago += $ticket->rifa->cuarta_suerte;
+                        array_push($suertes, 4);
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $quintaSuerte){
+                        $pago += $ticket->rifa->quinta_suerte;
+                        array_push($suertes, 5);
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $sextaSuerte){
+                        $pago += $ticket->rifa->sexta_suerte;
+                        array_push($suertes, 6);
+                        $ganador = true;
+                    }
+                    if($ticket->numero == $septimaSuerte){
+                        $pago += $ticket->rifa->septima_suerte;
+                        array_push($suertes, 7);
+                        $ganador = true;
+                    }
+
+                } else {
+                    return response()->json(['result' => 3, 'code' => '204']);
+                }
+
+            } else {
+                return response()->json(['result' => 4, 'code' => '204']);
+            }
+
+            $response['pago'] = $pago;
+            $response['suertesGanadas'] = $suertes;
+
+            if ($ganador) {
+                return response()->json(['result' => 1, 'data' => $response, 'code' => '200']);
+            } else
+                return response()->json(['result' => 2, 'code' => '200']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage(), 'code' => '500']);
+        }
+    }
+
 }
