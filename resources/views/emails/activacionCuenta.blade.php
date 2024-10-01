@@ -12,7 +12,7 @@
             <tr height="80">
                 <td align="left" class="vertical-align-middle" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: middle;">
                     <a href="http://localhost:4200" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
-                        <img src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/logo.png') }}" alt="Miller365" height="50" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
+                        <img src="{{ url('https://i.imgur.com/rMRNILV.png') }}" alt="Miller365" height="100" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
                     </a>
                 </td>
             </tr>
@@ -91,7 +91,7 @@
             <tr>
                 <td align="center" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
                     <a href="http://localhost:4200" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
-                        <img src="{{ url('https://electoral-sw.revolucionciudadana.com.ec/images/logoB.png') }}" alt="Miller365" height="30" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
+                        <img src="{{ url('https://imgur.com/9EtcyyY.png') }}" alt="Miller365" height="60" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
                     </a>
                 </td>
             </tr>
