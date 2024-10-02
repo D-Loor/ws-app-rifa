@@ -33,7 +33,7 @@ class RegistroMailable extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('controlelectoral@revolucionciudadana.com.ec'),
+            from: new Address('miller365klz@gmail.com'),
             subject: 'Registro Voluntario',
         );
     }
