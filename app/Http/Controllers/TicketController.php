@@ -15,8 +15,7 @@ class TicketController extends Controller
         'rifa_id' => 'required|numeric|exists:rifas,id',
         'usuario_id' => 'required|numeric|exists:usuarios,id',
         'numero' => 'required|numeric',
-        'fecha_venta' => 'required|date',
-        'fecha_juego' => 'required|date'
+        'fecha_venta' => 'required|date'
     ];
     /**
      * Display a listing of the resource.
@@ -291,7 +290,7 @@ class TicketController extends Controller
                     return response()->json(['result' => 0, 'code' => '200']);
                 }
 
-                $suerte = Suerte::whereDate('fecha', $ticket->fecha_juego)->get()->first();
+                $suerte = Suerte::whereDate('fecha', $ticket->fecha_venta)->get()->first();
 
                 if($suerte) {
                     $primeraSuerte = substr($suerte->primera_suerte, - $ticket->rifa->cifras);

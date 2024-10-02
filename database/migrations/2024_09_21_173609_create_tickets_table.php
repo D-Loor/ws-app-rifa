@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('numero');
             $table->string('codigo');
             $table->date('fecha_venta');
-            $table->date('fecha_juego');
         });
     }
 

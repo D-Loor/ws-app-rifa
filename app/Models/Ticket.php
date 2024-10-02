@@ -17,7 +17,6 @@ class Ticket extends Model
         'codigo',
         'numero',
         'fecha_venta',
-        'fecha_juego'
     ];
 
     public function rifa() {
