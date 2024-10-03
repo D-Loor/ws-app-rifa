@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('suertes', function (Blueprint $table) {
             $table->bigIncrements('id');            
-            $table->string('primera_suerte');
-            $table->string('segunda_suerte');
-            $table->string('tercera_suerte');
-            $table->string('cuarta_suerte');
-            $table->string('quinta_suerte');
-            $table->string('sexta_suerte');
-            $table->string('septima_suerte');
+            $table->string('primera_suerte', 10);
+            $table->string('segunda_suerte', 10);
+            $table->string('tercera_suerte', 10);
+            $table->string('cuarta_suerte', 10);
+            $table->string('quinta_suerte', 10);
+            $table->string('sexta_suerte', 10);
+            $table->string('septima_suerte', 10);
             $table->date('fecha');
         });
     }

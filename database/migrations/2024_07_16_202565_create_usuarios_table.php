@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('usuarios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('rol_id')->constrained('roles')->cascadeOnDelete();
-            $table->string('usuario')->unique();
-            $table->string('correo')->unique();
+            $table->string('usuario', 50)->unique();
+            $table->string('correo', 100)->unique();
             $table->string('password');
-            $table->string('estado');
+            $table->string('estado', 10);
         });
     }
 

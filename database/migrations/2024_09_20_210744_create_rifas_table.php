@@ -25,7 +25,7 @@ return new class extends Migration
             $table->double('septima_suerte');
             $table->integer('cifras');
             $table->double('limite');
-            $table->string('estado');
+            $table->string('estado', 10);
         });
     }
 
