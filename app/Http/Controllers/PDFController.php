@@ -10,7 +10,7 @@ class PDFController extends Controller
 {
     public function generarTicket(array $ticket)
     {
-        $url = "http://localhost:4200/validar/ticket/" . $ticket['codigo'];
+        $url = "https://miller365.web.app/#/validar-ticket/" . $ticket['codigo'];
 
         $qrCode = QrCode::size(200)->generate($url);
         $qrCode = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $qrCode);
