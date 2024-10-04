@@ -44,7 +44,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('rol', RolController::class);
     Route::resource('usuario', UsuarioController::class);
     Route::resource('rifa', RifaController::class);
-    Route::resource('limite', LimiteController::class);
     Route::resource('suerte', SuerteController::class);
     Route::resource('ticket', TicketController::class);
 
