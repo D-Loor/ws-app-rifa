@@ -11,7 +11,7 @@
         <table align="center" bgcolor="#ffffff" style="border-left: 10px solid white; border-right: 10px solid white; max-width: 600px; width: 100%;">
             <tr height="80">
                 <td align="left" class="vertical-align-middle" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: middle;">
-                    <a href="https://miller365.web.app/#/" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
+                    <a href="https://miller365.web.app/" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
                         <img src="{{ url('https://i.imgur.com/rMRNILV.png') }}" alt="Miller365" height="100" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
                     </a>
                 </td>
@@ -59,7 +59,7 @@
                             <br/>
                             <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Sus credenciales son: <br> <strong> Correo: </strong> {{ $datos['correo'] }} <br> <strong>Clave temporal: </strong> {{ $datos['password'] }} </p>
                             <br/>
-                            <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Ingrese <strong><a href="https://miller365.web.app/#//login" style="color: inherit; text-decoration: none;">aquí</a></strong> para dirigirse al sistema. </p>
+                            <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Ingrese <strong><a href="https://miller365.web.app//login" style="color: inherit; text-decoration: none;">aquí</a></strong> para dirigirse al sistema. </p>
                             <br/>
                             <p style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0;">Saludos cordiales,</p>
                             <br/>
@@ -90,7 +90,7 @@
             <tr height="15"><td style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;"></td></tr>
             <tr>
                 <td align="center" style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 16px; vertical-align: top;">
-                    <a href="https://miller365.web.app/#/" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
+                    <a href="https://miller365.web.app/" target="_blank" style="-webkit-text-decoration-color: #F16522; color: #F16522; text-decoration: none; text-decoration-color: #F16522;">
                         <img src="{{ url('https://imgur.com/9EtcyyY.png') }}" alt="Miller365" height="60" style="border: 0; font-size: 0; margin: 0; max-width: 100%; padding: 0;">
                     </a>
                 </td>
