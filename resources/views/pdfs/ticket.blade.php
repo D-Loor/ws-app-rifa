@@ -31,7 +31,10 @@
 
             .datos-ticket .header {
                 text-align: right;
-                font-size: 34px;
+            }
+            .datos-ticket .header span {
+                font-size: 30px;
+                font-weight: bold;
             }
 
             .datos-ticket .header .vendedor {
