@@ -33,11 +33,25 @@ class DatabaseSeeder extends Seeder
         DB::table('usuarios')->insert([
             [
                 'rol_id' => 1,
-                'usuario' => 'Administrador',
-                'correo' => 'admin@gmail.com',
-                'password' =>  Hash::make('admin'),
+                'usuario' => 'Janeth',
+                'correo' => 'janethsolorsano021@gmail.com',
+                'password' =>  Hash::make('janeth365.'),
                 'estado' => '1'
-                ]            
+            ],
+            [
+                'rol_id' => 1,
+                'usuario' => 'Leidy',
+                'correo' => 'leidygarcia2205@gmail.com',
+                'password' =>  Hash::make('leidygarcia365.'),
+                'estado' => '2'
+            ],
+            [
+                'rol_id' => 1,
+                'usuario' => 'Francheska',
+                'correo' => 'melanibasurto04@gmail.com',
+                'password' =>  Hash::make('Melani365.'),
+                'estado' => '2'
+            ]            
         ]);
 
     }

@@ -29,10 +29,13 @@
                 letter-spacing: 1px;
             }
 
-            .datos-ticket .vendedor {
+            .datos-ticket .header {
                 text-align: right;
             }
-
+            
+            .datos-ticket .header .vendedor {
+                padding-left: 400px;
+            }
             .datos-rifa-table {
                 width: 100%;
                 table-layout: fixed;
@@ -120,8 +123,10 @@
     <body>
         <div class="container">
             <div class="datos-ticket">
-                <div class="vendedor" >
-                    <span>vendedor: {{ $ticket['vendedor'] }}</span>
+                <div class="header" >
+                    <span>{{ $ticket['fecha'] }}
+                        <span class="vendedor">vendedor: {{ $ticket['vendedor'] }}</span>
+                    </span>
                 </div>
                 <table class="datos-rifa-table">
                     <tr>
