@@ -286,7 +286,7 @@ class TicketController extends Controller
                 
                 $ticketVigente = $fecha_venta->diff($fecha_actual)->days;
 
-                if ($ticketVigente > 6){
+                if ($ticketVigente > 7){
                     return response()->json(['result' => 0, 'code' => '200']);
                 }
 
