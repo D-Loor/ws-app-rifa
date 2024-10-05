@@ -111,7 +111,9 @@
                 font-style: italic;
                 word-spacing: 250px;
                 text-decoration: underline;
-                margin: 0 15px 20px 0px;  
+                margin: 0 15px 20px 0px;
+                font-weight: bold;
+                font-size: 30px;  
             }
 
             .footer .condiciones {
