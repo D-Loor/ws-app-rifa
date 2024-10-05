@@ -31,8 +31,9 @@
 
             .datos-ticket .header {
                 text-align: right;
+                font-size: 34px;
             }
-            
+
             .datos-ticket .header .vendedor {
                 padding-left: 400px;
             }
