@@ -119,6 +119,7 @@
             .footer .condiciones {
                 font-weight: bold;
                 font-size: 30px; 
+                margin-top: 10px;
             }
 
             .codigo-qr {
