@@ -39,18 +39,18 @@ class DatabaseSeeder extends Seeder
                 'estado' => '1'
             ],
             [
-                'rol_id' => 1,
+                'rol_id' => 2,
                 'usuario' => 'Leidy',
                 'correo' => 'leidygarcia2205@gmail.com',
                 'password' =>  Hash::make('leidygarcia365.'),
-                'estado' => '2'
+                'estado' => '1'
             ],
             [
-                'rol_id' => 1,
+                'rol_id' => 2,
                 'usuario' => 'Francheska',
                 'correo' => 'melanibasurto04@gmail.com',
                 'password' =>  Hash::make('Melani365.'),
-                'estado' => '2'
+                'estado' => '1'
             ]            
         ]);
 

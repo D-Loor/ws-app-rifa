@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('rifa_id')->constrained('rifas')->cascadeOnDelete();
             $table->foreignId('usuario_id')->constrained('usuarios')->cascadeOnDelete();
             $table->integer('numero');
-            $table->string('codigo', 10);
+            $table->string('codigo', 50);
             $table->date('fecha_venta');
         });
     }
