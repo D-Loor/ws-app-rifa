@@ -62,8 +62,7 @@ class UsuarioController extends Controller
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
             }
 
-            // $password = $this->generarPassword();
-            $password = 'Miller365.';
+            $password = $this->generarPassword();
 
             $data = $request->all();
             $data['password'] = Hash::make($password);

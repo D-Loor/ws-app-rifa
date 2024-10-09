@@ -54,38 +54,53 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         try {
+            $this->reglasValidacion['numero'] = 'required|array';
             $validator = Validator::make($request->all(), $this->reglasValidacion);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
             }
-            $milisegundos = strtotime(now()) * 1000;
-            $invertido = str_pad(strrev((string) $milisegundos), 13, '0', STR_PAD_LEFT);
 
-            $data = new Ticket();
-            $data->fill($request->all());
-            $data->codigo = $invertido;
-            $data->save();
+            $tickets = [];
 
-            $rifa = Rifa::find($request->rifa_id);
+            foreach ($request->numero as $numero) {
 
-            $ticket['fecha'] = $request->fecha_venta;
-            $ticket['vendedor'] = $request->nombre_vendedor;
-            $ticket['numero'] = $request->numero;
-            $ticket['valor'] = $rifa->valor;
-            $ticket['premio1'] = $rifa->primera_suerte;
-            $ticket['premio2'] = $rifa->segunda_suerte;
-            $ticket['premio3'] = $rifa->tercera_suerte;
-            $ticket['premio4'] = $rifa->cuarta_suerte;
-            $ticket['premio5'] = $rifa->quinta_suerte;
-            $ticket['premio6'] = $rifa->sexta_suerte;
-            $ticket['premio7'] = $rifa->septima_suerte;
-            $ticket['codigo'] = $invertido;
+                $milisegundos = round(microtime(true) * 1000);
+
+                $invertido = str_pad(strrev((string) $milisegundos), 13, '0', STR_PAD_LEFT);
+
+                $data = new Ticket();
+                $data->fill($request->all());
+                $data->rifa_id = $request->rifa_id;
+                $data->usuario_id = $request->usuario_id;
+                $data->numero = $numero;
+                $data->codigo = $invertido;
+                $data->fecha_venta = $request->fecha_venta;
+                $data->codigo = $invertido;
+                $data->save();
+
+                $rifa = Rifa::find($request->rifa_id);
+
+                $ticket['fecha'] = $request->fecha_venta;
+                $ticket['vendedor'] = $request->nombre_vendedor;
+                $ticket['numero'] = $numero;
+                $ticket['valor'] = $rifa->valor;
+                $ticket['premio1'] = $rifa->primera_suerte;
+                $ticket['premio2'] = $rifa->segunda_suerte;
+                $ticket['premio3'] = $rifa->tercera_suerte;
+                $ticket['premio4'] = $rifa->cuarta_suerte;
+                $ticket['premio5'] = $rifa->quinta_suerte;
+                $ticket['premio6'] = $rifa->sexta_suerte;
+                $ticket['premio7'] = $rifa->septima_suerte;
+                $ticket['codigo'] = $invertido;
+
+                array_push($tickets, $ticket);
+            }
 
             $pdfController = new PDFController();
-            return $pdfController->generarTicket($ticket);
+            return $pdfController->generarTicket($tickets);
             
-            // return response()->json(['result' => "Dato Registrado", 'code' => '200']);
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'code' => '500']);
         }
