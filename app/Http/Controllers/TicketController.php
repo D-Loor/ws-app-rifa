@@ -158,10 +158,24 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ticket  $ticket
+     * @param  int  $ticketId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ticket $ticket)
+    public function destroy($ticketId)
+    {
+        try {
+            $response = Ticket::find($ticketId);
+            if ($response) {
+                $response->delete();
+                return response()->json(['result' => "Dato Eliminado", 'code' => '200']);
+            }
+            return response()->json(['result' => "Registro no encontrado", 'code' => '404']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage(), 'code' => '500']);
+        }
+    }
+
+    public function eliminarTicket(Request $ticket)
     {
         try {
             $response = Ticket::find($ticket->id);
