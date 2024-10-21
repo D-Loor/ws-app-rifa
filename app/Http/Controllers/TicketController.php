@@ -228,6 +228,7 @@ class TicketController extends Controller
             foreach ($tickets as $ticket) {
 
                 $datosGanador['valor'] = $ticket->rifa->valor;
+                $datosGanador['numero'] = $ticket->numero;
                 $datosGanador['cifras'] = $ticket->rifa->cifras;
                 $ventas += $ticket->rifa->valor;
 
@@ -286,6 +287,10 @@ class TicketController extends Controller
                 }
 
             }
+
+            usort($ticketsGanadores, function($a, $b) {
+                return $b['premio'] <=> $a['premio'];
+            });
 
             $response['ventas'] = $ventas;
             $response['pagos'] = $pagos;
