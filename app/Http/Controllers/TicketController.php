@@ -391,4 +391,66 @@ class TicketController extends Controller
         }
     }
 
+    public function conteoTicketsVendidos($fechaVenta) {
+        try {
+            $tickets = Ticket::with(['usuario:id,usuario', 'rifa'])
+                ->whereDate('fecha_venta', $fechaVenta)
+                ->orderBy('numero')
+                ->get();
+
+            if ($tickets) {
+                $rifas = Rifa::where('estado', 1)
+                ->orderBy('valor')
+                ->get(['id', 'valor']);
+
+                $rifaMap = [];
+                $index = 1;
+                foreach ($rifas as $rifa) {
+                    $rifaMap[$rifa->valor] = $index;
+                    $index++;
+                }
+
+                $conteo = [];
+
+                foreach ($tickets as $ticket) {
+                    $key = array_search($ticket->numero, array_column($conteo, 'numero'));
+
+                    if ($key === false) {
+                        $nuevoRegistro = [
+                            'numero' => $ticket->numero,
+                            'total' => 0
+                        ];
+
+                        foreach ($rifaMap as $indice) {
+                            $nuevoRegistro[$indice] = 0;
+                        }
+
+                        $conteo[] = $nuevoRegistro;
+                        $key = array_key_last($conteo);
+                    }
+
+                    $valor_rifa = $rifas->firstWhere('id', $ticket->rifa_id)->valor;
+
+                    $indice = $rifaMap[$valor_rifa];
+
+                    $conteo[$key][$indice]++;
+                    
+                    $conteo[$key]['total'] += $valor_rifa;
+                }
+
+                usort($conteo, function ($a, $b) {
+                    return $a['numero'] <=> $b['numero'];
+                });
+
+                return response()->json([
+                    'tickets' => $rifas->pluck('valor')->unique()->values(),
+                    'conteo' => $conteo
+                ]);
+
+            } else
+                return response()->json(['result' => 0, 'code' => '204']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage(), 'code' => '500']);
+        }
+    }
 }
