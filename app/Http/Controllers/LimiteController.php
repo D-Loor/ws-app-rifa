@@ -56,6 +56,19 @@ class LimiteController extends Controller
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
             }
 
+            $existe = Limite::where(function($query) use ($request) {
+                $query->where(function($subquery) use ($request) {
+                    $subquery->where('desde', '<=', $request->desde)
+                             ->where('hasta', '>=', $request->desde);
+                })->orWhere(function($subquery) use ($request) {
+                    $subquery->where('desde', '<=', $request->hasta)
+                             ->where('hasta', '>=', $request->hasta);
+                });
+            })->where('estado', '1')->exists();
+            
+            if ($existe) {
+                return response()->json(['result' => "Registro Duplicado", 'code' => '409']);
+            }
             $data = new Limite();
             $data->fill($request->all());
             $data->save();
@@ -98,14 +111,27 @@ class LimiteController extends Controller
     public function update(Request $request, Limite $limite)
     {
         try {
-            $reglasEspecificas = $this->reglasValidacion;
-            $reglasEspecificas['id'] = ['required|integer|exists:limites,id'];
-            $reglasEspecificas['id'] = ['required|integer|exists:limites,id'];
-
-            $validator = Validator::make($request->all(), $reglasEspecificas);
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|integer|exists:limites,id',
+            ]);
 
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
+            }
+
+            $existe = Limite::where(function($query) use ($request) {
+                $query->where(function($subquery) use ($request) {
+                    $subquery->where('desde', '<=', $request->desde)
+                             ->where('hasta', '>=', $request->desde);
+                })->orWhere(function($subquery) use ($request) {
+                    $subquery->where('desde', '<=', $request->hasta)
+                             ->where('hasta', '>=', $request->hasta);
+                });
+            })->where('estado', '1')
+            ->where('id','!=', $request->id)->exists();
+            
+            if ($existe) {
+                return response()->json(['result' => "Registro Duplicado", 'code' => '409']);
             }
 
             $data = Limite::find($request->id);

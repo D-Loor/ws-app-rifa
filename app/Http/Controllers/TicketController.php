@@ -191,14 +191,28 @@ class TicketController extends Controller
 
     public function conteoVendidos($fecha, $numero, $rifa_id) {
         try {
-            $response = Ticket::where('rifa_id', $rifa_id)
-            ->where('numero', $numero)
-            ->whereDate('fecha_venta', $fecha)->count();
+            $ticketsVendidos = Ticket::where('rifa_id', $rifa_id)
+                ->where('numero', $numero)
+                ->whereDate('fecha_venta', $fecha)->count();
 
-            if ($response) {
+            $valorVendido = Ticket::where('numero', $numero)
+                ->whereDate('fecha_venta', $fecha)
+                ->with('rifa')
+                ->get()
+                ->sum(function ($ticket) {
+                    return $ticket->rifa ? $ticket->rifa->valor : 0;
+                });
+
+            if ($ticketsVendidos) {
+                $response['ticketsVendidos'] = $ticketsVendidos;
+                $response['valorVendido'] = $valorVendido;
                 return response()->json(['result' => $response, 'code' => '200']);
-            } else
-                return response()->json(['result' => 0, 'code' => '204']);
+            } else{
+
+                $response['ticketsVendidos'] = 0;
+                $response['valorVendido'] = 0;
+                return response()->json(['result' => $response, 'code' => '204']);
+            }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'code' => '500']);
         }
