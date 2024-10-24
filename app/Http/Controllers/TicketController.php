@@ -403,11 +403,13 @@ class TicketController extends Controller
                 ->orderBy('valor')
                 ->get(['id', 'valor']);
 
+                $valoresUnicos = $rifas->pluck('valor')
+                          ->unique()
+                          ->values();
+
                 $rifaMap = [];
-                $index = 1;
-                foreach ($rifas as $rifa) {
-                    $rifaMap[$rifa->valor] = $index;
-                    $index++;
+                foreach ($valoresUnicos as $index => $valor) {
+                    $rifaMap[$valor] = $index + 1;
                 }
 
                 $conteo = [];
@@ -442,10 +444,12 @@ class TicketController extends Controller
                     return $a['numero'] <=> $b['numero'];
                 });
 
-                return response()->json([
+                $response = [
                     'tickets' => $rifas->pluck('valor')->unique()->values(),
                     'conteo' => $conteo
-                ]);
+                ];
+
+                return response()->json(['result' => $response, 'code' => '200']);
 
             } else
                 return response()->json(['result' => 0, 'code' => '204']);
