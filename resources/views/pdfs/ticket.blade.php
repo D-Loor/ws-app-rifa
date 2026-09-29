@@ -138,7 +138,7 @@
                 </div>
                 <table class="datos-rifa-table">
                     <tr>
-                        <td class="empresa">Miller365</td>
+                        <td class="empresa">Rifas</td>
                         <td class="numero">#{{ $ticket['numero'] }}</td>
                     </tr>
                 </table>
@@ -172,7 +172,7 @@
                 <div>{!! $qrCode !!}</div>                
             </div>
             <div class="footer">
-                <p class="fecha">{{ $ticket['fecha'] }}                      Miller365</p>
+                <p class="fecha">{{ $ticket['fecha'] }}                      Rifas</p>
 
                 <p class="condiciones">Todo boleto ganador tiene 7 días de vigencia para reclamar tu premio.</p>
             </div>

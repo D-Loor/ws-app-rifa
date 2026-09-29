@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Limite;
 use App\Models\Rifa;
 use App\Models\Suerte;
 use App\Models\Ticket;
@@ -61,6 +62,21 @@ class TicketController extends Controller
                 return response()->json(['error' => $validator->errors(), 'code' => '400']);
             }
 
+            $rifa = Rifa::find($request->rifa_id);
+            if (!$rifa) {
+                return response()->json(['error' => 'Rifa no encontrada', 'code' => '404'], 404);
+            }
+
+            $validacionTope = $this->validarTopesVenta(
+                $request->numero,
+                $request->rifa_id,
+                $request->fecha_venta,
+                $rifa
+            );
+            if ($validacionTope !== true) {
+                return $validacionTope;
+            }
+
             $tickets = [];
 
             foreach ($request->numero as $numero) {
@@ -78,8 +94,6 @@ class TicketController extends Controller
                 $data->fecha_venta = $request->fecha_venta;
                 $data->codigo = $invertido;
                 $data->save();
-
-                $rifa = Rifa::find($request->rifa_id);
 
                 $ticket['fecha'] = $request->fecha_venta;
                 $ticket['vendedor'] = $request->nombre_vendedor;
@@ -99,8 +113,11 @@ class TicketController extends Controller
 
             $pdfController = new PDFController();
             return $pdfController->generarTicket($tickets);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage(), 'code' => '500']);
+        } catch (\Throwable $e) {
+            \Log::error('Error al comprar ticket: '.$e->getMessage(), [
+                'exception' => $e,
+            ]);
+            return response()->json(['error' => $e->getMessage(), 'code' => '500'], 500);
         }
     }
 
@@ -190,31 +207,83 @@ class TicketController extends Controller
     public function conteoVendidos($fecha, $numero, $rifa_id)
     {
         try {
-            $ticketsVendidos = Ticket::where('rifa_id', $rifa_id)
+            $ticketsVendidos = (int) Ticket::where('rifa_id', $rifa_id)
                 ->where('numero', $numero)
-                ->whereDate('fecha_venta', $fecha)->count();
+                ->whereDate('fecha_venta', $fecha)
+                ->count();
 
-            $valorVendido = Ticket::where('numero', $numero)
+            $valorVendido = (float) Ticket::where('numero', $numero)
                 ->whereDate('fecha_venta', $fecha)
                 ->with('rifa')
                 ->get()
                 ->sum(function ($ticket) {
-                    return $ticket->rifa ? $ticket->rifa->valor : 0;
+                    return $ticket->rifa ? (float) $ticket->rifa->valor : 0;
                 });
 
-            if ($ticketsVendidos) {
-                $response['ticketsVendidos'] = $ticketsVendidos;
-                $response['valorVendido'] = $valorVendido;
-                return response()->json(['result' => $response, 'code' => '200']);
-            } else {
-
-                $response['ticketsVendidos'] = 0;
-                $response['valorVendido'] = 0;
-                return response()->json(['result' => $response, 'code' => '204']);
-            }
+            return response()->json([
+                'result' => [
+                    'ticketsVendidos' => $ticketsVendidos,
+                    'valorVendido' => $valorVendido,
+                ],
+                'code' => '200',
+            ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage(), 'code' => '500']);
         }
+    }
+
+    /**
+     * Valida tope por valor diario y límite por cantidad de la rifa.
+     * Se permite llegar exacto al tope; solo se rechaza si lo supera.
+     */
+    private function validarTopesVenta(array $numeros, $rifaId, string $fechaVenta, Rifa $rifa)
+    {
+        $diaSemana = (int) date('N', strtotime($fechaVenta));
+        $limiteDiario = Limite::where('desde', '<=', $diaSemana)
+            ->where('hasta', '>=', $diaSemana)
+            ->where('estado', '1')
+            ->first();
+
+        $topeValor = $limiteDiario ? (float) $limiteDiario->limite : 0;
+        $limiteCantidad = (int) $rifa->limite;
+        $valorTicket = (float) $rifa->valor;
+        $conteoPorNumero = array_count_values(array_map('strval', $numeros));
+
+        foreach ($conteoPorNumero as $numero => $cantidadNueva) {
+            $ticketsVendidos = (int) Ticket::where('rifa_id', $rifaId)
+                ->where('numero', $numero)
+                ->whereDate('fecha_venta', $fechaVenta)
+                ->count();
+
+            if ($limiteCantidad > 0 && ($ticketsVendidos + $cantidadNueva) > $limiteCantidad) {
+                return response()->json([
+                    'error' => "El número {$numero} vendió su cantidad máxima.",
+                    'code' => '400',
+                ], 400);
+            }
+
+            if ($topeValor > 0) {
+                $valorBase = (float) Ticket::where('numero', $numero)
+                    ->whereDate('fecha_venta', $fechaVenta)
+                    ->with('rifa')
+                    ->get()
+                    ->sum(function ($ticket) {
+                        return $ticket->rifa ? (float) $ticket->rifa->valor : 0;
+                    });
+
+                $valorNuevaVenta = $cantidadNueva * $valorTicket;
+
+                // Permitir == tope; rechazar solo si supera
+                if (($valorBase + $valorNuevaVenta) > $topeValor) {
+                    return response()->json([
+                        'error' => "El número {$numero} superaría el tope diario de \${$topeValor}.",
+                        'code' => '400',
+                    ], 400);
+                }
+            }
+        }
+
+        return true;
     }
 
     public function ticketVendidos($fechaVenta)

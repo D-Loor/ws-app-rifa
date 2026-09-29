@@ -33,7 +33,7 @@ class ActivacionCuentaMailable extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('miller365klz@gmail.com'),
+            from: new Address('rifas@gmail.com'),
             subject: 'Activacion de Cuenta',
         );
     }

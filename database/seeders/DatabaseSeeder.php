@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('roles')->insert([
             [
-                'rol' => 'Administrador',
+                'rol' => 'Super Administrador',
                 'estado' => '1',
-                'descripcion' => 'Administrador del sistema.',
+                'descripcion' => 'Super administrador del sistema.',
             ],
             [
                 'rol' => 'Vendedor',
@@ -29,29 +29,15 @@ class DatabaseSeeder extends Seeder
                 'descripcion' => 'Vendedor de Tickets.'
             ]
         ]);
-        
+
         DB::table('usuarios')->insert([
             [
                 'rol_id' => 1,
-                'usuario' => 'Janeth',
-                'correo' => 'janethsolorsano021@gmail.com',
-                'password' =>  Hash::make('janeth365.'),
+                'usuario' => 'SuperAdmin',
+                'correo' => 'admin@rifas.local',
+                'password' => Hash::make('SuperAdmin365!'),
                 'estado' => '1'
-            ],
-            [
-                'rol_id' => 2,
-                'usuario' => 'Leidy',
-                'correo' => 'leidygarcia2205@gmail.com',
-                'password' =>  Hash::make('leidygarcia365.'),
-                'estado' => '1'
-            ],
-            [
-                'rol_id' => 2,
-                'usuario' => 'Francheska',
-                'correo' => 'melanibasurto04@gmail.com',
-                'password' =>  Hash::make('Melani365.'),
-                'estado' => '1'
-            ]            
+            ]
         ]);
 
     }

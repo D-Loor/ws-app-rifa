@@ -10,25 +10,40 @@ class PDFController extends Controller
 {
     public function generarTicket(array $tickets)
     {
-        $mpdf = new Mpdf();
+        $tempDir = storage_path('app/mpdf-temp');
+        if (!is_dir($tempDir)) {
+            mkdir($tempDir, 0775, true);
+        }
+
+        $mpdf = new Mpdf([
+            'tempDir' => $tempDir,
+            'curlAllowUnsafeSslRequests' => true,
+        ]);
         $mpdf->SetCompression(true);
         $mpdf->simpleTables = true;
         $mpdf->useSubstitutions = false;
         $mpdf->imageVars['images'] = 70;
 
 
-        foreach ($tickets as $ticket) {
-            $url = "https://miller365.web.app/validar-ticket/" . $ticket['codigo'];
-            $qrCode = QrCode::size(200)->generate($url);
+        $total = count($tickets);
+        foreach ($tickets as $index => $ticket) {
+            $url = "https://rifas.web.app/validar-ticket/" . $ticket['codigo'];
+            $qrCode = QrCode::format('svg')->size(200)->generate($url);
             $qrCode = str_replace('<?xml version="1.0" encoding="UTF-8"?>', '', $qrCode);
-    
+
             $mpdf->WriteHTML(view('pdfs.ticket', compact('ticket', 'qrCode'))->render());
-    
-            if (end($tickets) !== $ticket) {
+
+            if ($index < $total - 1) {
                 $mpdf->AddPage();
             }
         }
-    
-        $mpdf->Output('Tickets.pdf', 'I');
+
+        // 'S' returns the PDF as string so Laravel can send a proper HTTP response
+        $pdfContent = $mpdf->Output('Tickets.pdf', 'S');
+
+        return response($pdfContent, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="Tickets.pdf"',
+        ]);
     }
 }
